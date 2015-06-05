@@ -146,6 +146,7 @@ function widget:UnitCreated( unitID,  unitDefID,  unitTeam)
 end
 
 function widget:UnitDestroyed( unitID,  unitDefID,  unitTeam)
+	if not Spring.IsUnitAllied(unitID) then return end
 	RemovePossibleCommander(unitID,  unitDefID)
 end
 
@@ -162,7 +163,7 @@ end
 -------------------
 -- Drawing
 
-function widget:DrawWorld()
+local function DrawWorldFunc()
 	glDepthTest(true)
 	glAlphaTest(GL_GREATER, 0)
 	
@@ -188,4 +189,11 @@ function widget:DrawWorld()
 	glColor(1,1,1,1)
 	glTexture(false)
 	glDepthTest(false)
+end
+
+function widget:DrawWorld()
+	DrawWorldFunc()
+end
+function widget:DrawWorldRefraction()
+	DrawWorldFunc()
 end
